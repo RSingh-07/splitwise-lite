@@ -56,6 +56,24 @@ public class SettlementService {
         int left =0;
         int right = balanceList.size()-1;
 
+        while(left<right) {
+            Map.Entry<User, Double> creditor = balanceList.get(left);
+            Map.Entry<User, Double> debtor = balanceList.get(right);
+
+            double settleAmount = Math.min(creditor.getValue(), Math.abs(debtor.getValue()));
+            transactions.add(debtor.getKey().getName() + " pays " + creditor.getKey().getName() + " " + settleAmount);
+
+            creditor.setValue(creditor.getValue() - settleAmount);
+            debtor.setValue(debtor.getValue() + settleAmount);
+
+            if(creditor.getValue()==0){
+                left++;
+            }
+
+            if(debtor.getValue()==0){
+                right--;
+            }
+        }
         return transactions;
     }
 }
