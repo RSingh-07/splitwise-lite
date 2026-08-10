@@ -1,6 +1,8 @@
 package com.example.splitwise_lite.entity;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "expense_groups")
 public class Group{
@@ -8,6 +10,8 @@ public class Group{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Expense> expense;
 
     public Group(){}
     public Group(String name){this.name = name;}
