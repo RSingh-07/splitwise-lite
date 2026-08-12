@@ -3,6 +3,7 @@ package com.example.splitwise_lite.controller;
 
 import com.example.splitwise_lite.entity.Group;
 import com.example.splitwise_lite.repository.GroupRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import com.example.splitwise_lite.exception.GroupNotFoundException;
 
@@ -31,13 +32,13 @@ public class GroupController {
      }
 
      @PostMapping("/groups")
-    public Group addGroup(@RequestBody Group group){
+    public Group addGroup(@Valid @RequestBody Group group){
         Group groupDetails = groupRepository.save(group);
         return groupDetails;
      }
 
      @PutMapping("/groups/{id}")
-    public Group editGroup(@PathVariable Long id, @RequestBody Group group){
+    public Group editGroup(@PathVariable Long id,@Valid @RequestBody Group group){
          Group getGroupById = groupRepository.findById(id)
                  .orElseThrow(() -> new GroupNotFoundException("Group Id is not found!!"));
          getGroupById.setName(group.getName());
