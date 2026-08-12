@@ -1,14 +1,22 @@
 package com.example.splitwise_lite.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class ExpenseRequest {
+    @NotNull
     private Long groupId;
+    @NotNull
     private Long paidBy;
+    @Positive
     private double amount;
     private String description;
     private LocalDate expenseDate;
+    @NotEmpty
     private List<Long> participantIds;
 
     public Long getGroupId() {

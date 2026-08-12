@@ -13,6 +13,8 @@ import com.example.splitwise_lite.repository.ExpenseRepository;
 import com.example.splitwise_lite.repository.ExpenseSplitRepository;
 import com.example.splitwise_lite.repository.GroupRepository;
 import com.example.splitwise_lite.repository.UserRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +35,7 @@ public class ExpenseController {
     }
 
     @PostMapping("/expense")
-    public Expense addExpense(@RequestBody ExpenseRequest expenseRequest) {
+    public Expense addExpense(@Valid @RequestBody ExpenseRequest expenseRequest) {
         Group group = groupRepository.findById(expenseRequest.getGroupId())
                 .orElseThrow(() -> new GroupNotFoundException("Group not found with id: " + expenseRequest.getGroupId()));  //FETCH GROUP
 
