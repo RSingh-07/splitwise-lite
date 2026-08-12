@@ -4,6 +4,7 @@ package com.example.splitwise_lite.controller;
 import com.example.splitwise_lite.entity.User;
 import com.example.splitwise_lite.exception.UserNotFoundException;
 import com.example.splitwise_lite.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,13 +32,13 @@ public class UserController {
 
 
     @PostMapping("/users")
-    public User addUser(@RequestBody User user){
+    public User addUser(@Valid @RequestBody User user){
         User userDetails =  userRepository.save(user);
         return userDetails;
     }
 
     @PutMapping("/users/{id}")
-    public User editUserDetails(@PathVariable Long id, @RequestBody User user){
+    public User editUserDetails(@PathVariable Long id, @Valid @RequestBody User user){
         User userToBeEdited = userRepository.findById(id)
                 .orElseThrow(()->new UserNotFoundException("User not found with id: "+id));
 
