@@ -11,6 +11,7 @@ import com.example.splitwise_lite.exception.UserNotFoundException;
 import com.example.splitwise_lite.repository.GroupMemberRepository;
 import com.example.splitwise_lite.repository.GroupRepository;
 import com.example.splitwise_lite.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class GroupMemberController {
     }
 
     @PostMapping("/group-members")
-    public GroupMember addgroupMember(@RequestBody GroupMemberRequest request){
+    public GroupMember addgroupMember(@Valid @RequestBody GroupMemberRequest request){
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: "+ request.getUserId()));
 

@@ -1,7 +1,11 @@
 package com.example.splitwise_lite.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class GroupMemberRequest {
+    @NotNull
     private Long userId;
+    @NotNull
     private Long groupId;
     private String role;
 
