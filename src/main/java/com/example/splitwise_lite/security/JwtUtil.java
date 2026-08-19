@@ -2,12 +2,14 @@ package com.example.splitwise_lite.security;
 
 
 import com.example.splitwise_lite.entity.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 
@@ -34,6 +36,35 @@ public class JwtUtil {
                 .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSigningKey())
                 .compact();
+    }
+
+    private Claims extractAllClaims(String token){
+        return Jwts.parser()
+                .verifyWith((SecretKey)  getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    private String extractEmail(String token){
+        Claims claims = extractAllClaims(token);
+        String email = claims.getSubject();
+        return email;
+    }
+
+    private String extractRole(String token){
+        Claims claims = extractAllClaims(token);
+        String role = claims.get("role", String.class);
+        return role;
+    }
+
+    public boolean isTokenValid(String token){
+        try{
+            extractAllClaims(token);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
 }
