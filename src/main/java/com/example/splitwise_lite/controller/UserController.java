@@ -31,11 +31,6 @@ public class UserController {
     }
 
 
-    @PostMapping("/users")
-    public User addUser(@Valid @RequestBody User user){
-        User userDetails =  userRepository.save(user);
-        return userDetails;
-    }
 
     @PutMapping("/users/{id}")
     public User editUserDetails(@PathVariable Long id, @Valid @RequestBody User user){
