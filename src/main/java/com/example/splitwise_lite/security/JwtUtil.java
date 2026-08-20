@@ -46,13 +46,13 @@ public class JwtUtil {
                 .getPayload();
     }
 
-    private String extractEmail(String token){
+    public String extractEmail(String token){
         Claims claims = extractAllClaims(token);
         String email = claims.getSubject();
         return email;
     }
 
-    private String extractRole(String token){
+    public String extractRole(String token){
         Claims claims = extractAllClaims(token);
         String role = claims.get("role", String.class);
         return role;
